@@ -1,0 +1,4 @@
+name: blockvault
+version: '1.0.0'
+main: me.benrobson.blockvault.Blockvault
+api-version: '1.21'
