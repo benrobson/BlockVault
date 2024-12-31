@@ -34,6 +34,10 @@ BlockVault is an interactive challenge where players collaborate to collect ever
   * Most rare blocks contributed. 
   * Category-specific leaders (e.g., wood, ores).
 
+### Broadcast Announcements
+* **Rare Blocks/Items Announcements:** Announce server-wide when a rare block or item is added to the vault, celebrating player contributions and encouraging participation.
+* **Milestone Achievements:** Broadcast messages when major milestones are reached, such as completing 50% of the vault or finishing specific block categories.
+
 ### Timer and Boss Integration
 * A countdown timer can be enabled to add urgency, ticking down the time remaining for the challenge.
 * A boss integration shows live updates on:
