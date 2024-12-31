@@ -1,7 +1,7 @@
 # BlockVault Configuration
 # Configures the BlockVault, collection goals, progress tracking, and rewards system.
 
-# Museum settings
+# Vault settings
 vault:
   location:
     # Coordinates for the vault's center point
@@ -14,27 +14,15 @@ vault:
   schematic:
     # Path to the schematic file
     path: "vault.schem"
-    # Whether to use the default schematic or a custom one
-    use_default_schematic: true
 
-  excluded_items:
-    - minecraft:bedrock
-    - minecraft:barrier
+# Points system settings
+points:
+  # Base points for each block type
+  base_points:
+    common: 1 # Points for common blocks (e.g., Cobblestone, Oak Logs)
+    uncommon: 5 # Points for uncommon blocks (e.g., Prismarine, Obsidian)
+    rare: 10 # Points for rare blocks/items (e.g., Dragon Egg, Netherite Block)
 
-# Progress Tracking
-progress:
-  # Whether to display the progress bar on the screen
-  show_progress_bar: true
-
-# Leaderboard Settings
-leaderboard:
-  # Whether to show the leaderboard in the server
-  show_leaderboard_hologram: true
-  location:
-    # Coordinates for the leaderboard hologram
-    x: 100
-    y: 64
-    z: 100
-    world: world
-  # Update interval for leaderboard display in seconds
-  update_interval: 60
+# Language settings
+lang:
+  prefix: "&8&l[&3BD&8&l]"

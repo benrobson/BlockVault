@@ -2,16 +2,20 @@ name: BlockVault
 version: '1.0.0'
 main: me.benrobson.blockvault.BlockVault
 api-version: '1.21'
+softdepend: [WorldEdit]
 commands:
-  blockvault:
-    description: Start and manage the BlockVault challenge.
-    usage: /<command> <start|leaderboard|add|progress>
-    aliases:
-      - leaderboard
-      - lb
-permissions:
-  blockvault.use:
-    description: Allows usage of BlockVault commands.
-    default: true
-  blockvault.generate:
-    description: Allows usage to generate BlockVault.
+  bvadd:
+    description: Command
+    usage: /bvadd <itemblock>
+  bvgenerate:
+    description: Command
+    usage: /bvgenerate
+  bvleaderboard:
+    description: Command
+    usage: /bvleaderboard
+  bvprogress:
+    description: Command
+    usage: /bvprogress
+  bvstart:
+    description: Command
+    usage: /bvstart
