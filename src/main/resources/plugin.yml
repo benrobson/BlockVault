@@ -2,7 +2,7 @@ name: BlockVault
 version: '1.0.0'
 main: me.benrobson.blockvault.BlockVault
 api-version: '1.21'
-softdepend: [WorldEdit]
+depend: [WorldEdit]
 commands:
   bvadd:
     description: Command

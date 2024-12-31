@@ -13,7 +13,7 @@ public final class BlockVault extends JavaPlugin {
 
         // Register commands
         getCommand("bvstart").setExecutor(new bvstart());
-        getCommand("bvgenerate").setExecutor(new bvgenerate());
+        getCommand("bvgenerate").setExecutor(new bvgenerate(this));
         getCommand("bvadd").setExecutor(new bvadd());
         getCommand("bvprogress").setExecutor(new bvprogress());
         getCommand("bvleaderboard").setExecutor(new bvleaderboard());
