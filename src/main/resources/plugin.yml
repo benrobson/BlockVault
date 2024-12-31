@@ -1,4 +1,17 @@
-name: blockvault
+name: BlockVault
 version: '1.0.0'
-main: me.benrobson.blockvault.Blockvault
+main: me.benrobson.blockvault.BlockVault
 api-version: '1.21'
+commands:
+  blockvault:
+    description: Start and manage the BlockVault challenge.
+    usage: /<command> <start|leaderboard|add|progress>
+    aliases:
+      - leaderboard
+      - lb
+permissions:
+  blockvault.use:
+    description: Allows usage of BlockVault commands.
+    default: true
+  blockvault.generate:
+    description: Allows usage to generate BlockVault.

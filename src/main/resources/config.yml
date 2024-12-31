@@ -1,0 +1,40 @@
+# BlockVault Configuration
+# Configures the BlockVault, collection goals, progress tracking, and rewards system.
+
+# Museum settings
+vault:
+  location:
+    # Coordinates for the vault's center point
+    x: 100
+    y: 64
+    z: 100
+    world: world
+
+  # Schematic settings for the vault design
+  schematic:
+    # Path to the schematic file
+    path: "vault.schem"
+    # Whether to use the default schematic or a custom one
+    use_default_schematic: true
+
+  excluded_items:
+    - minecraft:bedrock
+    - minecraft:barrier
+
+# Progress Tracking
+progress:
+  # Whether to display the progress bar on the screen
+  show_progress_bar: true
+
+# Leaderboard Settings
+leaderboard:
+  # Whether to show the leaderboard in the server
+  show_leaderboard_hologram: true
+  location:
+    # Coordinates for the leaderboard hologram
+    x: 100
+    y: 64
+    z: 100
+    world: world
+  # Update interval for leaderboard display in seconds
+  update_interval: 60
