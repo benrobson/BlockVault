@@ -3,6 +3,8 @@
 
 # Vault settings
 vault:
+  start-time: "2025-01-01 14:30:00"
+  started: false
   location:
     # Coordinates for the vault's center point
     x: 100
@@ -17,11 +19,9 @@ vault:
 
 # Points system settings
 points:
-  # Base points for each block type
-  base_points:
-    common: 1 # Points for common blocks (e.g., Cobblestone, Oak Logs)
-    uncommon: 5 # Points for uncommon blocks (e.g., Prismarine, Obsidian)
-    rare: 10 # Points for rare blocks/items (e.g., Dragon Egg, Netherite Block)
+  common: 1 # Points for common blocks (e.g., Cobblestone, Oak Logs)
+  uncommon: 5 # Points for uncommon blocks (e.g., Prismarine, Obsidian)
+  rare: 10 # Points for rare blocks/items (e.g., Dragon Egg, Netherite Block)
 
 # Language settings
 lang:
