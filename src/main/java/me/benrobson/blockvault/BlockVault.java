@@ -14,10 +14,9 @@ public final class BlockVault extends JavaPlugin {
 
         // Register commands
         getCommand("bvstart").setExecutor(new bvstart(this));
-        getCommand("bvgenerate").setExecutor(new bvgenerate(this));
-        getCommand("bvadd").setExecutor(new bvsubmit(this));
-        getCommand("bvprogress").setExecutor(new bvprogress());
-        getCommand("bvleaderboard").setExecutor(new bvleaderboard());
+        getCommand("bvsubmit").setExecutor(new bvsubmit(this));
+        getCommand("bvprogress").setExecutor(new bvprogress(this));
+        getCommand("bvleaderboard").setExecutor(new bvleaderboard(this));
 
         // Register events
 

@@ -12,16 +12,15 @@ vault:
     z: 100
     world: world
 
-  # Schematic settings for the vault design
-  schematic:
-    # Path to the schematic file
-    path: "vault.schem"
+timer:
+  enabled: false
+  timer-end: "2025-01-01 14:30:00"
 
 # Points system settings
 points:
-  common: 1 # Points for common blocks (e.g., Cobblestone, Oak Logs)
-  uncommon: 5 # Points for uncommon blocks (e.g., Prismarine, Obsidian)
-  rare: 10 # Points for rare blocks/items (e.g., Dragon Egg, Netherite Block)
+  common: 1
+  uncommon: 5
+  rare: 10
 
 # Language settings
 lang:

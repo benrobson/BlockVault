@@ -24,16 +24,15 @@ public class bvstart implements CommandExecutor {
             return true;
         }
 
-        // Check if the vault challenge has already been started
         if (vaultUtil.hasStarted()) {
-            sender.sendMessage("§cThe vault challenge has already been started.");
+            sender.sendMessage("§cYou cannot submit items as the Vault has not been opened yet.");
             return true;
         }
 
         // Log the start date and time
         vaultUtil.logVaultStart();
         plugin.saveConfig();
-        sender.sendMessage(ChatColor.GREEN + "The vault challenge has started.");
+        sender.sendMessage(ChatColor.GREEN + "The vault challenge has started, the vault is open!.");
         return true;
     }
 }

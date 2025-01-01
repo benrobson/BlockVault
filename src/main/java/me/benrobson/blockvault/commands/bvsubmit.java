@@ -1,5 +1,6 @@
 package me.benrobson.blockvault.commands;
 
+import me.benrobson.blockvault.util.VaultUtil;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,12 +16,15 @@ import java.io.IOException;
 import java.util.List;
 
 import static me.benrobson.blockvault.util.VaultUtil.formatMaterialName;
+import static me.benrobson.blockvault.util.VaultUtil.updateRecentContributions;
 
 public class bvsubmit implements CommandExecutor {
     private final Plugin plugin;
+    private final VaultUtil vaultUtil;
 
     public bvsubmit(Plugin plugin) {
         this.plugin = plugin;
+        this.vaultUtil = new VaultUtil(plugin.getConfig());
     }
 
     @Override
@@ -32,8 +36,8 @@ public class bvsubmit implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("blockvault.add")) {
-            player.sendMessage("§cYou don't have permission to use this command!");
+        if (vaultUtil.hasStarted()) {
+            sender.sendMessage("§cYou cannot submit items as the Vault has not been opened yet.");
             return true;
         }
 
@@ -77,6 +81,7 @@ public class bvsubmit implements CommandExecutor {
         int pointsPerCategory = config.getInt("points." + category, 1); // Default to 1 point
 
         playerItems.add(itemName);
+        updateRecentContributions(player, itemName, plugin);
         vaultData.set("vault_data." + player.getName() + ".collected_items", playerItems);
 
         // Update player points

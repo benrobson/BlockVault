@@ -4,12 +4,9 @@ main: me.benrobson.blockvault.BlockVault
 api-version: '1.21'
 depend: [WorldEdit]
 commands:
-  bvadd:
+  bvsubmit:
     description: Command
-    usage: /bvadd <itemblock>
-  bvgenerate:
-    description: Command
-    usage: /bvgenerate
+    usage: /bvsubmit
   bvleaderboard:
     description: Command
     usage: /bvleaderboard

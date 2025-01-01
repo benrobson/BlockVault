@@ -3,11 +3,13 @@ package me.benrobson.blockvault.util;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class VaultUtil {
@@ -72,5 +74,32 @@ public class VaultUtil {
             formattedName.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
         }
         return formattedName.toString().trim();
+    }
+
+    public static void updateRecentContributions(Player player, String itemName, Plugin plugin) {
+        // Load the vault data file
+        File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
+        YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
+
+        // Get the current list of recent contributions for the player
+        String playerPath = "vault_data." + player.getName() + ".recent_contributions";
+        List<String> recentContributions = vaultData.getStringList(playerPath);
+
+        // Ensure the list has no more than 5 entries
+        if (recentContributions.size() >= 5) {
+            recentContributions.remove(0); // Remove the oldest contribution
+        }
+
+        // Add the new contribution to the list
+        recentContributions.add(player.getName() + " collected " + itemName);
+
+        // Save the updated list back into the YML file
+        vaultData.set(playerPath, recentContributions);
+        try {
+            vaultData.save(vaultDataFile);
+        } catch (IOException e) {
+            player.sendMessage("§cFailed to save recent contributions.");
+            e.printStackTrace();
+        }
     }
 }
