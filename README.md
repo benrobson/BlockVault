@@ -1,14 +1,10 @@
-## BlockVault
+# BlockVault
 
 ![img](https://i.imgur.com/DPcMoaq.png)
 
 BlockVault is an interactive challenge where players collaborate to collect every unique block and item in Minecraft. The centerpiece is a large, dynamic museum building where contributions are tracked, and progress is displayed, turning the collection into an engaging and rewarding experience.
 
 ## Features
-### Dynamic Building Generation
-* Generates a polished, pre-designed museum building at a designated location using schematics.
-* Customizable layouts for server-specific aesthetics or a default design for simplicity.
-
 ### Interactive Block Displays
 * Sections dedicated to specific block categories (e.g., wood, ores, decorative blocks).
 * Blocks and items can be placed on predefined slots with item frames or display stands, indicating where each item belongs and can be contributed to.
@@ -29,10 +25,6 @@ BlockVault is an interactive challenge where players collaborate to collect ever
 * Progress can be viewed in real-time using a hologram display, showcasing the top contributors and collection milestones.
 * Use the `/vault leaderboard` command to see a detailed leaderboard of top contributors, including points and blocks contributed.
 * GUI integration allows players to easily browse and view all collected blocks in an organized interface.
-* Add categories to the leaderboard:
-  * Most blocks contributed today/this week. 
-  * Most rare blocks contributed. 
-  * Category-specific leaders (e.g., wood, ores).
 
 ### Broadcast Announcements
 * **Rare Blocks/Items Announcements:** Announce server-wide when a rare block or item is added to the vault, celebrating player contributions and encouraging participation.

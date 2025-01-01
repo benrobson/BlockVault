@@ -1,5 +1,6 @@
 package me.benrobson.blockvault.commands;
 
+import me.benrobson.blockvault.util.FileUtil;
 import me.benrobson.blockvault.util.VaultUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +18,7 @@ public class bvprogress implements CommandExecutor {
 
     public bvprogress(Plugin plugin) {
         this.plugin = plugin;
-        this.vaultUtil = new VaultUtil(plugin.getConfig());
+        this.vaultUtil = new VaultUtil(plugin);
     }
 
     @Override

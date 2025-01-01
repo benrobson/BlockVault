@@ -8,28 +8,30 @@ import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class VaultUtil {
+    private final Plugin plugin;
+    private final FileUtil fileUtil;
 
-    private final FileConfiguration config;
-
-    public VaultUtil(FileConfiguration config) {
-        this.config = config;
+    public VaultUtil(Plugin plugin) {
+        this.plugin = plugin;
+        this.fileUtil = new FileUtil(plugin); // Pass the plugin instance to FileUtil
     }
 
     // Method to check if the vault has started
     public boolean hasStarted() {
-        return config.getBoolean("vault.started", false);
+        return fileUtil.getConfig().getBoolean("vault.started", false); // Use fileUtil to access the config
     }
 
     // Method to log the start time of the vault challenge
     public void logVaultStart() {
         String currentDateTime = java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        config.set("vault.start-time", currentDateTime);
-        config.set("vault.started", true);
+        fileUtil.getConfig().set("vault.start-time", currentDateTime);
+        fileUtil.getConfig().set("vault.started", true);
     }
 
     public static void generateVaultItems(Plugin plugin) {
@@ -101,5 +103,69 @@ public class VaultUtil {
             player.sendMessage("§cFailed to save recent contributions.");
             e.printStackTrace();
         }
+    }
+
+    public List<String> getTopPlayers() {
+        // Load vault data to get the collected items count per player
+        File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
+        YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
+
+        Map<String, Integer> playerProgress = new HashMap<>();
+
+        // Loop through each player and count their collected items
+        for (String playerName : vaultData.getConfigurationSection("vault_data").getKeys(false)) {
+            List<String> collectedItems = vaultData.getStringList("vault_data." + playerName + ".collected_items");
+            playerProgress.put(playerName, collectedItems.size());
+        }
+
+        // Sort players by their collected items (highest to lowest)
+        List<Map.Entry<String, Integer>> sortedPlayers = new ArrayList<>(playerProgress.entrySet());
+        sortedPlayers.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));  // Sort in descending order
+
+        // Get the top 5 players
+        List<String> topPlayers = new ArrayList<>();
+        for (int i = 0; i < Math.min(5, sortedPlayers.size()); i++) {
+            topPlayers.add(sortedPlayers.get(i).getKey());
+        }
+
+        return topPlayers;
+    }
+
+    /**
+     * Gets the total number of items in the vault.
+     *
+     * @return The total number of items in the vault.
+     */
+    private int getTotalVaultItems() {
+        File vaultItemsFile = new File(plugin.getDataFolder(), "vault_items.yml");
+        YamlConfiguration vaultItems = YamlConfiguration.loadConfiguration(vaultItemsFile);
+        return vaultItems.getConfigurationSection("items").getKeys(false).size();
+    }
+
+    /**
+     * Gets the number of collected items by a player.
+     *
+     * @return The total number of collected items.
+     */
+    private int getCollectedItemsCount() {
+        // Load vault data and calculate total collected items
+        File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
+        YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
+
+        int collectedItems = 0;
+        for (String playerName : vaultData.getConfigurationSection("vault_data").getKeys(false)) {
+            collectedItems += vaultData.getStringList("vault_data." + playerName + ".collected_items").size();
+        }
+        return collectedItems;
+    }
+
+    /**
+     * Get the initial countdown time in seconds.
+     *
+     * @return The initial countdown time in seconds.
+     */
+    private int getInitialCountdownTime() {
+        // Assuming that the duration is set somewhere in your config or hardcoded
+        return plugin.getConfig().getInt("challenge.duration_in_seconds", 600);  // Default to 10 minutes
     }
 }

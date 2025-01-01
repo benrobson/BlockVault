@@ -1,5 +1,6 @@
 package me.benrobson.blockvault.commands;
 
+import me.benrobson.blockvault.util.FileUtil;
 import me.benrobson.blockvault.util.VaultUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,7 +14,7 @@ public class bvstart implements CommandExecutor {
 
     public bvstart(Plugin plugin) {
         this.plugin = plugin;
-        this.vaultUtil = new VaultUtil(plugin.getConfig());
+        this.vaultUtil = new VaultUtil(plugin);
     }
 
     @Override

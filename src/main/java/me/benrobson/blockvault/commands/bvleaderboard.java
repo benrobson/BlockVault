@@ -1,5 +1,6 @@
 package me.benrobson.blockvault.commands;
 
+import me.benrobson.blockvault.util.VaultUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,9 +13,11 @@ import java.util.*;
 
 public class bvleaderboard implements CommandExecutor {
     private final Plugin plugin;
+    private final VaultUtil vaultUtil;
 
     public bvleaderboard(Plugin plugin) {
         this.plugin = plugin;
+        this.vaultUtil = new VaultUtil(plugin);
     }
 
     @Override
@@ -24,9 +27,20 @@ public class bvleaderboard implements CommandExecutor {
             return true;
         }
 
+        if (!vaultUtil.hasStarted()) {
+            sender.sendMessage("§cYou cannot check the leaderboard as the Vault has not been opened yet.");
+            return true;
+        }
+
         // Load the player data file
         File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
         YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
+
+        // Check if 'vault_data' section exists
+        if (vaultData.getConfigurationSection("vault_data") == null) {
+            sender.sendMessage("§cNo player data found! Cannot produce leaderboard.");
+            return true;
+        }
 
         // Get all player points data
         Set<String> playerNames = vaultData.getConfigurationSection("vault_data").getKeys(false);
@@ -43,6 +57,7 @@ public class bvleaderboard implements CommandExecutor {
 
         // Display top 10 players
         sender.sendMessage("§aVault Leaderboard:");
+        sender.sendMessage("§a=================================");
 
         int topPlayersCount = Math.min(10, sortedPlayers.size());
         for (int i = 0; i < topPlayersCount; i++) {
