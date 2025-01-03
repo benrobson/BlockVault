@@ -1,20 +1,62 @@
-# BlockVault Configuration
-# Configures the BlockVault, collection goals, progress tracking, and rewards system.
+# BlockVault
 
 # Vault settings
 vault:
-  start-time: "2025-01-01 14:30:00"
+  start-time: null
   started: false
-  location:
-    # Coordinates for the vault's center point
-    x: 100
-    y: 64
-    z: 100
-    world: world
+  region:
+    upperregion:
+      X: -138
+      Y: 97
+      Z: 118
+    lowerregion:
+      X: 133
+      Y: 68
+      Z: 96
+  excludeditems:
+    - debug_stick
+    - structure_block
+    - barrier
+    - command_block
+    - chain_command_block
+    - repeating_command_block
+    - light
+    - jigsaw
+    - knowledge_book
+    - spawner
+    - end_portal_frame
+    - frosted_ice
+    - bedrock
+    - dragon_egg
+    - piglin_brute_spawn_egg
+    - parrot_spawn_egg
+    - turtle_spawn_egg
+    - zombie_spawn_egg
+    - mule_spawn_egg
+    - armadillo_spawn_egg
+    - tropical_fish_spawn_egg
+    - blaze_spawn_egg
+    - shulker_spawn_egg
+    - sniffer_spawn_egg
+    - polar_bear_spawn_egg
+    - phantom_spawn_egg
+    - guardian_spawn_egg
+    - ravager_spawn_egg
+    - wandering_trader_spawn_egg
+    - villager_spawn_egg
+    - wither_skeleton_spawn_egg
+    - warden_spawn_egg
+    - ender_dragon_spawn_egg
+    - bat_spawn_egg
+    - sniffer_egg
+    - camel_spawn_egg
+    - creeper_spawn_egg
+    - breeze_spawn_egg
+    - iron_golem_spawn_egg
 
 timer:
   enabled: false
-  timer-end: "2025-01-01 14:30:00"
+  timer-end: null
 
 # Points system settings
 points:

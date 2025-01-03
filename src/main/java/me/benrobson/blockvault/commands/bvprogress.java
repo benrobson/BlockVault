@@ -1,6 +1,5 @@
 package me.benrobson.blockvault.commands;
 
-import me.benrobson.blockvault.util.FileUtil;
 import me.benrobson.blockvault.util.VaultUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

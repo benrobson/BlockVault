@@ -37,7 +37,7 @@ public class bvsubmit implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (vaultUtil.hasStarted()) {
+        if (!vaultUtil.hasStarted()) {
             sender.sendMessage("§cYou cannot submit items as the Vault has not been opened yet.");
             return true;
         }

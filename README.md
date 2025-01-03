@@ -12,9 +12,9 @@ BlockVault is an interactive challenge where players collaborate to collect ever
 ### Points System
 * Players earn points for each block they unlock and contribute to the museum. 
 * The points awarded vary based on the rarity of the block/item:
-  * **Common Blocks:** 1 point per block (e.g., Cobblestone, Oak Logs).
-  * **Uncommon Blocks:** 5 points per block (e.g., Prismarine, Obsidian). 
-  * **Rare Blocks/Items:** 10+ points per block (e.g., Dragon Egg, Netherite Block). 
+  * **Common Blocks:** 1 point per block.
+  * **Uncommon Blocks:** 5 points per block.
+  * **Rare Blocks/Items:** 10+ points per block.
 * A running total of points is tracked for each player, contributing to their leaderboard position.
 
 ### Tracking Progress
