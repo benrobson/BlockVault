@@ -40,21 +40,27 @@ public class VaultUtil {
             return;
         }
 
+        // Load excluded items from the config
+        List<String> excludedItems = plugin.getConfig().getStringList("vault.excludeditems");
+
+        // Map to store valid items
         Map<String, String> itemData = new HashMap<>();
 
         for (Material material : Material.values()) {
-            // Add materials that are either blocks or items
-            if (material.isBlock() || material.isItem()) {
+            // Add materials that are either blocks or items and are not excluded
+            if ((material.isBlock() || material.isItem()) &&
+                    !excludedItems.contains(material.name().toLowerCase())) {
                 itemData.put(material.name().toLowerCase(), "COMMON"); // Default category
             }
         }
 
+        // Create a YAML configuration and add the items
         YamlConfiguration yaml = new YamlConfiguration();
         yaml.createSection("items", itemData);
 
         try {
             yaml.save(file);
-            plugin.getLogger().info("Generated vault_items.yml with all blocks and items set to default category COMMON.");
+            plugin.getLogger().info("Generated vault_items.yml with all valid blocks and items set to default category COMMON.");
         } catch (IOException e) {
             plugin.getLogger().severe("Failed to save vault_items.yml: " + e.getMessage());
             e.printStackTrace();

@@ -33,7 +33,7 @@ public final class BlockVault extends JavaPlugin {
 
         saveDefaultConfig();
         VaultUtil.generateVaultItems(this);
-        scheduleVaultStateTask(this, vaultUtil);
+        scheduleVaultStateTask(this, vaultUtil, fileUtil);
     }
 
     @Override
