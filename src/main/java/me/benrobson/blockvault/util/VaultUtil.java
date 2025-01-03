@@ -29,7 +29,10 @@ public class VaultUtil {
 
     // Method to check if the vault has started
     public boolean hasStarted() {
-        return fileUtil.getConfig().getBoolean("vault.started", false); // Use fileUtil to access the config
+        Boolean started = plugin.getConfig().getBoolean("vault.started");
+        plugin.getLogger().info(String.valueOf(started));
+
+        return plugin.getConfig().getBoolean("vault.started", false);
     }
 
     public static void generateVaultItems(Plugin plugin) {
@@ -161,16 +164,6 @@ public class VaultUtil {
             collectedItems += vaultData.getStringList("vault_data." + playerName + ".collected_items").size();
         }
         return collectedItems;
-    }
-
-    /**
-     * Get the initial countdown time in seconds.
-     *
-     * @return The initial countdown time in seconds.
-     */
-    private int getInitialCountdownTime() {
-        // Assuming that the duration is set somewhere in your config or hardcoded
-        return plugin.getConfig().getInt("challenge.duration_in_seconds", 600);  // Default to 10 minutes
     }
 
     /**

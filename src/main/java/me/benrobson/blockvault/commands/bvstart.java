@@ -21,26 +21,23 @@ public class bvstart implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // Check for the necessary permission
         if (!sender.hasPermission("blockvault.start")) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
             return true;
         }
 
-        // Check if the vault has already started
         if (vaultUtil.hasStarted()) {
             sender.sendMessage(ChatColor.RED + "The Vault challenge has already started.");
             return true;
         }
 
-        // Log the start date and time
         try {
             String currentDateTime = java.time.LocalDateTime.now()
                     .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-            // Update the configuration
-            fileUtil.getConfig().set("vault.start-time", currentDateTime);
-            fileUtil.getConfig().set("vault.started", true);
+            // Update specific config values
+            fileUtil.updateConfigValue("vault.starttime", currentDateTime);
+            fileUtil.updateConfigValue("vault.started", true);
 
             sender.sendMessage(ChatColor.GREEN + "The vault challenge has started, the vault is open!");
         } catch (Exception e) {
