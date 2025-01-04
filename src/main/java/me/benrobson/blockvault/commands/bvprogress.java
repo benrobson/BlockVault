@@ -45,7 +45,7 @@ public class bvprogress implements CommandExecutor {
         int totalItems = vaultItems.getConfigurationSection("items").getKeys(false).size();
 
         // Get the player's progress percentage and progress bar
-        String progress = vaultUtil.getProgress(vaultData, player, totalItems);
+        String progress = vaultUtil.getProgress(vaultData, totalItems);
 
         // Display progress
         player.sendMessage("§aVault Progress");

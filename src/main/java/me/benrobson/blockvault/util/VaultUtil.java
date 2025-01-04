@@ -190,20 +190,23 @@ public class VaultUtil {
     }
 
     /**
-     * Calculates the player's progress and generates a progress bar.
+     * Calculates the collective progress of all players in the vault and generates a progress bar.
      *
      * @param vaultData   The YamlConfiguration object for vault data.
-     * @param player      The player whose progress is being calculated.
      * @param totalItems  The total number of items required for the vault.
-     * @return A formatted progress string showing percentage and progress bar.
+     * @return A formatted progress string showing the collective percentage and progress bar.
      */
-    public String getProgress(YamlConfiguration vaultData, Player player, int totalItems) {
-        // Get the total number of collected items for this player
-        List<String> playerCollectedItems = vaultData.getStringList("vault_data." + player.getName() + ".collected_items");
-        int collectedItemCount = playerCollectedItems.size();
+    public String getProgress(YamlConfiguration vaultData, int totalItems) {
+        int totalCollectedItems = 0;
 
-        // Calculate the percentage of progress
-        int progressPercentage = (int) ((double) collectedItemCount / totalItems * 100);
+        // Iterate through all player entries in the vault data to sum up collected items
+        for (String playerName : vaultData.getConfigurationSection("vault_data").getKeys(false)) {
+            List<String> playerCollectedItems = vaultData.getStringList("vault_data." + playerName + ".collected_items");
+            totalCollectedItems += playerCollectedItems.size();
+        }
+
+        // Calculate the percentage of progress for the collective effort
+        int progressPercentage = (int) ((double) totalCollectedItems / totalItems * 100);
 
         // Create a progress bar
         StringBuilder progressBar = new StringBuilder("§a[");
@@ -219,8 +222,8 @@ public class VaultUtil {
         }
         progressBar.append("§a]");
 
-        // Create the progress string with collected and total items
-        String progressInfo = String.format("§e%d/%d collected", collectedItemCount, totalItems);
+        // Create the progress string with total collected and total required items
+        String progressInfo = String.format("§e%d/%d collected", totalCollectedItems, totalItems);
 
         // Return the full progress string
         return progressInfo + " §f(" + progressPercentage + "% complete)\n" + progressBar;
