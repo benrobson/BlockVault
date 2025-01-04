@@ -1,4 +1,20 @@
-name: blockvault
+name: BlockVault
 version: '1.0.0'
-main: me.benrobson.blockvault.Blockvault
+main: me.benrobson.blockvault.BlockVault
 api-version: '1.21'
+commands:
+  bvsubmit:
+    description: Command
+    usage: /bvsubmit
+  bvleaderboard:
+    description: Command
+    usage: /bvleaderboard
+  bvprogress:
+    description: Command
+    usage: /bvprogress
+  bvstart:
+    description: Command
+    usage: /bvstart
+  bvupdatestate:
+    description: Command
+    usage: /bvupdatestate
