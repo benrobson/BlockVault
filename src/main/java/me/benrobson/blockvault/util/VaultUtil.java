@@ -29,9 +29,6 @@ public class VaultUtil {
 
     // Method to check if the vault has started
     public boolean hasStarted() {
-        Boolean started = plugin.getConfig().getBoolean("vault.started");
-        plugin.getLogger().info(String.valueOf(started));
-
         return plugin.getConfig().getBoolean("vault.started", false);
     }
 
@@ -83,87 +80,6 @@ public class VaultUtil {
             formattedName.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
         }
         return formattedName.toString().trim();
-    }
-
-    public static void updateRecentContributions(Player player, String itemName, Plugin plugin) {
-        // Load the vault data file
-        File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
-        YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
-
-        // Get the current list of recent contributions for the player
-        String playerPath = "vault_data." + player.getName() + ".recent_contributions";
-        List<String> recentContributions = vaultData.getStringList(playerPath);
-
-        // Ensure the list has no more than 5 entries
-        if (recentContributions.size() >= 5) {
-            recentContributions.remove(0); // Remove the oldest contribution
-        }
-
-        // Add the new contribution to the list
-        recentContributions.add(player.getName() + " collected " + itemName);
-
-        // Save the updated list back into the YML file
-        vaultData.set(playerPath, recentContributions);
-        try {
-            vaultData.save(vaultDataFile);
-        } catch (IOException e) {
-            player.sendMessage("§cFailed to save recent contributions.");
-            e.printStackTrace();
-        }
-    }
-
-    public List<String> getTopPlayers() {
-        // Load vault data to get the collected items count per player
-        File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
-        YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
-
-        Map<String, Integer> playerProgress = new HashMap<>();
-
-        // Loop through each player and count their collected items
-        for (String playerName : vaultData.getConfigurationSection("vault_data").getKeys(false)) {
-            List<String> collectedItems = vaultData.getStringList("vault_data." + playerName + ".collected_items");
-            playerProgress.put(playerName, collectedItems.size());
-        }
-
-        // Sort players by their collected items (highest to lowest)
-        List<Map.Entry<String, Integer>> sortedPlayers = new ArrayList<>(playerProgress.entrySet());
-        sortedPlayers.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));  // Sort in descending order
-
-        // Get the top 5 players
-        List<String> topPlayers = new ArrayList<>();
-        for (int i = 0; i < Math.min(5, sortedPlayers.size()); i++) {
-            topPlayers.add(sortedPlayers.get(i).getKey());
-        }
-
-        return topPlayers;
-    }
-
-    /**
-     * Gets the total number of items in the vault.
-     *
-     * @return The total number of items in the vault.
-     */
-    private int getTotalVaultItems() {
-        File vaultItemsFile = new File(plugin.getDataFolder(), "vault_items.yml");
-        YamlConfiguration vaultItems = YamlConfiguration.loadConfiguration(vaultItemsFile);
-        return vaultItems.getConfigurationSection("items").getKeys(false).size();
-    }
-
-    /**
-     * Gets the number of collected items by a player.
-     *
-     * @return The total number of collected items.
-     */
-    private int getCollectedItemsCount() {
-        // Load vault data and calculate total collected items
-        File vaultDataFile = new File(plugin.getDataFolder(), "vault_data.yml");
-        YamlConfiguration vaultData = YamlConfiguration.loadConfiguration(vaultDataFile);
-
-        int collectedItems = 0;
-        for (String playerName : vaultData.getConfigurationSection("vault_data").getKeys(false)) {
-            collectedItems += vaultData.getStringList("vault_data." + playerName + ".collected_items").size();
-        }
-        return collectedItems;
     }
 
     /**
@@ -271,5 +187,42 @@ public class VaultUtil {
             e.printStackTrace();
             if (player != null) player.sendMessage(errorMessage);
         }
+    }
+
+    /**
+     * Calculates the player's progress and generates a progress bar.
+     *
+     * @param vaultData   The YamlConfiguration object for vault data.
+     * @param player      The player whose progress is being calculated.
+     * @param totalItems  The total number of items required for the vault.
+     * @return A formatted progress string showing percentage and progress bar.
+     */
+    public String getProgress(YamlConfiguration vaultData, Player player, int totalItems) {
+        // Get the total number of collected items for this player
+        List<String> playerCollectedItems = vaultData.getStringList("vault_data." + player.getName() + ".collected_items");
+        int collectedItemCount = playerCollectedItems.size();
+
+        // Calculate the percentage of progress
+        int progressPercentage = (int) ((double) collectedItemCount / totalItems * 100);
+
+        // Create a progress bar
+        StringBuilder progressBar = new StringBuilder("§a[");
+        int barLength = 50; // Total bar length
+        int progressLength = (int) ((progressPercentage / 100.0) * barLength);
+
+        for (int i = 0; i < barLength; i++) {
+            if (i < progressLength) {
+                progressBar.append("§a|");
+            } else {
+                progressBar.append("§7|");
+            }
+        }
+        progressBar.append("§a]");
+
+        // Create the progress string with collected and total items
+        String progressInfo = String.format("§e%d/%d collected", collectedItemCount, totalItems);
+
+        // Return the full progress string
+        return progressInfo + " §f(" + progressPercentage + "% complete)\n" + progressBar;
     }
 }

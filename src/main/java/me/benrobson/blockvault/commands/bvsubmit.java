@@ -16,8 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static me.benrobson.blockvault.util.VaultUtil.formatMaterialName;
-import static me.benrobson.blockvault.util.VaultUtil.updateRecentContributions;
+import static me.benrobson.blockvault.util.VaultUtil.*;
 
 public class bvsubmit implements CommandExecutor {
     private final Plugin plugin;
@@ -82,7 +81,7 @@ public class bvsubmit implements CommandExecutor {
         int pointsPerCategory = config.getInt("points." + category, 1); // Default to 1 point
 
         playerItems.add(itemName);
-        updateRecentContributions(player, itemName, plugin);
+
         vaultData.set("vault_data." + player.getName() + ".collected_items", playerItems);
 
         // Update player points

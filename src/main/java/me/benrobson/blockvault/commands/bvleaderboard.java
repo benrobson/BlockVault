@@ -42,13 +42,15 @@ public class bvleaderboard implements CommandExecutor {
             return true;
         }
 
-        // Get all player points data
+        // Get all player points data, excluding "global_collected_items"
         Set<String> playerNames = vaultData.getConfigurationSection("vault_data").getKeys(false);
         Map<String, Integer> playerPoints = new HashMap<>();
 
         for (String playerName : playerNames) {
-            int points = vaultData.getInt("vault_data." + playerName + ".points");
-            playerPoints.put(playerName, points);
+            if (!playerName.equalsIgnoreCase("global_collected_items")) { // Exclude global_collected_items
+                int points = vaultData.getInt("vault_data." + playerName + ".points");
+                playerPoints.put(playerName, points);
+            }
         }
 
         // Sort players by points in descending order
@@ -59,7 +61,7 @@ public class bvleaderboard implements CommandExecutor {
         sender.sendMessage("§aVault Leaderboard:");
         sender.sendMessage("§a=================================");
 
-        int topPlayersCount = Math.min(10, sortedPlayers.size());
+        int topPlayersCount = Math.min(5, sortedPlayers.size());
         for (int i = 0; i < topPlayersCount; i++) {
             Map.Entry<String, Integer> entry = sortedPlayers.get(i);
             String playerName = entry.getKey();

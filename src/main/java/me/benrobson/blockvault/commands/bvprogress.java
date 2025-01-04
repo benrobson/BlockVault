@@ -44,40 +44,13 @@ public class bvprogress implements CommandExecutor {
         // Get the total number of items in the vault
         int totalItems = vaultItems.getConfigurationSection("items").getKeys(false).size();
 
-        // Get the total number of collected items for this player
-        List<String> playerCollectedItems = vaultData.getStringList("vault_data." + player.getName() + ".collected_items");
-        int collectedItemCount = playerCollectedItems.size();
-
-        // Calculate the percentage of progress
-        int progressPercentage = (int) ((double) collectedItemCount / totalItems * 100);
-
-        // Create a progress bar
-        StringBuilder progressBar = new StringBuilder("§a[");
-        int barLength = 20;
-        int progressLength = (int) ((progressPercentage / 100.0) * barLength);
-        for (int i = 0; i < barLength; i++) {
-            if (i < progressLength) {
-                progressBar.append("§a#");
-            } else {
-                progressBar.append("§7#");
-            }
-        }
-        progressBar.append("§a]");
+        // Get the player's progress percentage and progress bar
+        String progress = vaultUtil.getProgress(vaultData, player, totalItems);
 
         // Display progress
-        player.sendMessage("§aVault Progress: " + progressPercentage + "% complete.");
-        player.sendMessage(progressBar.toString());
-
-        // Display the last 5 contributions
-        List<String> recentContributions = vaultData.getStringList("vault_data." + player.getName() + ".recent_contributions");
-        if (recentContributions.isEmpty()) {
-            player.sendMessage("§cNo recent contributions.");
-        } else {
-            player.sendMessage("§eLast 5 Contributions:");
-            for (int i = Math.max(0, recentContributions.size() - 5); i < recentContributions.size(); i++) {
-                player.sendMessage("§7- " + recentContributions.get(i));
-            }
-        }
+        player.sendMessage("§aVault Progress");
+        player.sendMessage("==================================");
+        player.sendMessage(progress);
 
         return true;
     }
